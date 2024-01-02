@@ -6,7 +6,7 @@ import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import { AvatarDropdown, AvatarName } from './components/RightContent/AvatarDropdown';
-import { errorConfig } from './requestErrorConfig';
+import { errorConfig } from './requestConfig';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
