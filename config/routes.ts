@@ -5,7 +5,8 @@
     layout: false,
     routes: [{ path: '/user/register', component: './User/Register' }],
   },
-  { path: '/welcome', icon: 'smile', component: './Welcome' },
+  { path: '/', redirect: '/chart'},
+  { path: '/chart', icon:'smile', component: './AddChart'},
   {
     path: '/admin',
     icon: 'crown',
@@ -15,7 +16,6 @@
       { path: '/admin/sub-page', name: '管理页面2', component: './Admin' },
     ],
   },
-  { icon: 'table', path: '/list', component: './TableList' },
   { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },
 ];
