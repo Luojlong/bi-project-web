@@ -5,8 +5,8 @@
     layout: false,
     routes: [{ path: '/user/register', component: './User/Register' }],
   },
-  { path: '/', redirect: '/chart'},
-  { path: '/chart', icon:'smile', component: './AddChart'},
+  { path: '/', redirect: '/chart' },
+  { path: '/chart', name: '数据分析', icon: 'AreaChartOutlined', component: './AddChart' },
   {
     path: '/admin',
     icon: 'crown',

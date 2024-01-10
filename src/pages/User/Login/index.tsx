@@ -12,7 +12,6 @@ import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
 
 const Login: React.FC = () => {
-  const [] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const { setInitialState } = useModel('@@initialState');
   const containerClassName = useEmotionCss(() => {
