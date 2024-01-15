@@ -6,7 +6,9 @@
     routes: [{ path: '/user/register', component: './User/Register' }],
   },
   { path: '/', redirect: '/chart' },
-  { path: '/chart', name: '数据分析', icon: 'AreaChartOutlined', component: './AddChart' },
+  { path: '/chart', name: '数据分析', icon: 'DotChartOutlined', component: './AddChart' },
+  { path: '/chartasync', name: '批量分析', icon: 'DotChartOutlined', component: './AddChartAsync' },
+  { path: '/mychart', name: '我的图表', icon: 'UnorderedListOutlined', component: './MyChart' },
   {
     path: '/admin',
     icon: 'crown',

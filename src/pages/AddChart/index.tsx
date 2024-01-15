@@ -5,7 +5,7 @@ import {
   Card,
   Col,
   Divider,
-  Form,
+  Form, Input,
   message,
   Row,
   Space,
@@ -18,10 +18,15 @@ import ReactECharts from 'echarts-for-react';
 import React, { useState } from 'react';
 
 const AddChart: React.FC = () => {
+  // 图表状态，是否有图表结果
   const [chart, setChart] = useState<API.BiResponse>();
+  // 提交状态，是否有正在提交
   const [submitting, setSubmitting] = useState<boolean>(false);
+  // json解析状态，是否解析成功
   const [option, setOption] = useState<any>();
+
   const onFinish = async (values: any) => {
+    console.log('onFinish called');
     // 避免重复提交
     if (submitting) return;
     setSubmitting(true);
@@ -39,6 +44,7 @@ const AddChart: React.FC = () => {
       } else {
         message.success('分析成功');
         const chartOption = JSON.parse(res.data.genChart ?? '');
+        console.log(chartOption);
         if (!chartOption) {
           throw new Error('图表代码解析错误');
         } else {
@@ -66,7 +72,7 @@ const AddChart: React.FC = () => {
                 <TextArea placeholder="请输入你的分析需求。若图表类型不存在你想要的分析类型，可在此处添加" />
               </Form.Item>
               <Form.Item name="name" label="图表名称">
-                <input placeholder="请输入图表名称" />
+                <Input placeholder="请输入图表名称" />
               </Form.Item>
               <Form.Item name="chartType" label="图表类型">
                 <TreeSelect
@@ -120,7 +126,7 @@ const AddChart: React.FC = () => {
                 />
               </Form.Item>
               <Form.Item name="file" label="原始数据">
-                <Upload name="file" maxCount={1}>
+                <Upload name="file" maxCount={1} listType={'picture-card'}>
                   <button style={{ border: 0, background: 'none' }} type="button">
                     <PlusOutlined />
                     <div style={{ marginTop: 3 }}>上传 Excel 文件</div>
@@ -145,12 +151,12 @@ const AddChart: React.FC = () => {
         </Col>
         <Col span={12}>
           <Card title={'分析结论'}>
-            {chart?.genResult ?? <div></div>}
+            {chart?.genResult ?? <div />}
             <Spin spinning={submitting}></Spin>
           </Card>
           <Divider></Divider>
           <Card title={'图表展示'}>
-            {option ? <ReactECharts option={option} /> : <div></div>}
+            {option ? <ReactECharts option={option} /> : <div />}
             <Spin spinning={submitting}></Spin>
           </Card>
         </Col>

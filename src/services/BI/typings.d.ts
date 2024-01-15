@@ -1,4 +1,9 @@
 declare namespace API {
+  type addUsingGETParams = {
+    /** name */
+    name?: string;
+  };
+
   type BaseResponseBiResponse_ = {
     code?: number;
     data?: BiResponse;
@@ -31,7 +36,7 @@ declare namespace API {
 
   type BaseResponseLong_ = {
     code?: number;
-    data?: string;
+    data?: number;
     message?: string;
   };
 
@@ -59,6 +64,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponsePostVO_ = {
+    code?: number;
+    data?: PostVO;
+    message?: string;
+  };
+
   type BaseResponseString_ = {
     code?: number;
     data?: string;
@@ -78,7 +89,7 @@ declare namespace API {
   };
 
   type BiResponse = {
-    chartId?: string;
+    chartId?: number;
     genChart?: string;
     genResult?: string;
   };
@@ -91,12 +102,12 @@ declare namespace API {
     genChart?: string;
     genResult?: string;
     goal?: string;
-    id?: string;
+    id?: number;
     isDelete?: number;
     name?: string;
     status?: string;
     updateTime?: string;
-    userId?: string;
+    userId?: number;
   };
 
   type ChartAddRequest = {
@@ -110,40 +121,49 @@ declare namespace API {
     chartData?: string;
     chartType?: string;
     goal?: string;
-    id?: string;
+    id?: number;
     name?: string;
   };
 
   type ChartQueryRequest = {
     chartType?: string;
-    current?: string;
+    current?: number;
     goal?: string;
-    id?: string;
+    id?: number;
     name?: string;
-    pageSize?: string;
+    pageSize?: number;
     sortField?: string;
     sortOrder?: string;
-    userId?: string;
+    userId?: number;
   };
 
   type ChartUpdateRequest = {
     chartData?: string;
     chartType?: string;
     createTime?: string;
-    execMessage?: string;
     genChart?: string;
     genResult?: string;
     goal?: string;
-    id?: string;
+    id?: number;
     isDelete?: number;
     name?: string;
-    status?: string;
     updateTime?: string;
-    userId?: string;
   };
 
   type DeleteRequest = {
-    id?: string;
+    id?: number;
+  };
+
+  type genChartByAiAsyncMqUsingPOSTParams = {
+    chartType?: string;
+    goal?: string;
+    name?: string;
+  };
+
+  type genChartByAiAsyncUsingPOSTParams = {
+    chartType?: string;
+    goal?: string;
+    name?: string;
   };
 
   type genChartByAiUsingPOSTParams = {
@@ -152,24 +172,29 @@ declare namespace API {
     name?: string;
   };
 
-  type getchartByIdUsingGETParams = {
+  type getChartByIdUsingGETParams = {
     /** id */
-    id?: string;
+    id?: number;
+  };
+
+  type getPostVOByIdUsingGETParams = {
+    /** id */
+    id?: number;
   };
 
   type getUserByIdUsingGETParams = {
     /** id */
-    id?: string;
+    id?: number;
   };
 
   type getUserVOByIdUsingGETParams = {
     /** id */
-    id?: string;
+    id?: number;
   };
 
   type LoginUserVO = {
     createTime?: string;
-    id?: string;
+    id?: number;
     updateTime?: string;
     userAvatar?: string;
     userName?: string;
@@ -184,87 +209,107 @@ declare namespace API {
 
   type PageChart_ = {
     countId?: string;
-    current?: string;
-    maxLimit?: string;
+    current?: number;
+    maxLimit?: number;
     optimizeCountSql?: boolean;
     orders?: OrderItem[];
-    pages?: string;
+    pages?: number;
     records?: Chart[];
     searchCount?: boolean;
-    size?: string;
-    total?: string;
+    size?: number;
+    total?: number;
   };
 
   type PagePostVO_ = {
     countId?: string;
-    current?: string;
-    maxLimit?: string;
+    current?: number;
+    maxLimit?: number;
     optimizeCountSql?: boolean;
     orders?: OrderItem[];
-    pages?: string;
+    pages?: number;
     records?: PostVO[];
     searchCount?: boolean;
-    size?: string;
-    total?: string;
+    size?: number;
+    total?: number;
   };
 
   type PageUser_ = {
     countId?: string;
-    current?: string;
-    maxLimit?: string;
+    current?: number;
+    maxLimit?: number;
     optimizeCountSql?: boolean;
     orders?: OrderItem[];
-    pages?: string;
+    pages?: number;
     records?: User[];
     searchCount?: boolean;
-    size?: string;
-    total?: string;
+    size?: number;
+    total?: number;
   };
 
   type PageUserVO_ = {
     countId?: string;
-    current?: string;
-    maxLimit?: string;
+    current?: number;
+    maxLimit?: number;
     optimizeCountSql?: boolean;
     orders?: OrderItem[];
-    pages?: string;
+    pages?: number;
     records?: UserVO[];
     searchCount?: boolean;
-    size?: string;
-    total?: string;
+    size?: number;
+    total?: number;
+  };
+
+  type PostAddRequest = {
+    content?: string;
+    tags?: string[];
+    title?: string;
+  };
+
+  type PostEditRequest = {
+    content?: string;
+    id?: number;
+    tags?: string[];
+    title?: string;
   };
 
   type PostFavourAddRequest = {
-    postId?: string;
+    postId?: number;
   };
 
   type PostFavourQueryRequest = {
-    current?: string;
-    pageSize?: string;
+    current?: number;
+    pageSize?: number;
     postQueryRequest?: PostQueryRequest;
     sortField?: string;
     sortOrder?: string;
-    userId?: string;
+    userId?: number;
   };
 
   type PostQueryRequest = {
     content?: string;
-    current?: string;
-    favourUserId?: string;
-    id?: string;
-    notId?: string;
+    current?: number;
+    favourUserId?: number;
+    id?: number;
+    notId?: number;
     orTags?: string[];
-    pageSize?: string;
+    pageSize?: number;
     searchText?: string;
     sortField?: string;
     sortOrder?: string;
     tags?: string[];
     title?: string;
-    userId?: string;
+    userId?: number;
   };
 
   type PostThumbAddRequest = {
-    postId?: string;
+    postId?: number;
+  };
+
+  type PostUpdateRequest = {
+    content?: string;
+    id?: number;
+    tags?: string[];
+    title?: string;
   };
 
   type PostVO = {
@@ -273,13 +318,13 @@ declare namespace API {
     favourNum?: number;
     hasFavour?: boolean;
     hasThumb?: boolean;
-    id?: string;
+    id?: number;
     tagList?: string[];
     thumbNum?: number;
     title?: string;
     updateTime?: string;
     user?: UserVO;
-    userId?: string;
+    userId?: number;
   };
 
   type uploadFileUsingPOSTParams = {
@@ -288,7 +333,7 @@ declare namespace API {
 
   type User = {
     createTime?: string;
-    id?: string;
+    id?: number;
     isDelete?: number;
     updateTime?: string;
     userAccount?: string;
@@ -311,10 +356,10 @@ declare namespace API {
   };
 
   type UserQueryRequest = {
-    current?: string;
-    id?: string;
+    current?: number;
+    id?: number;
     mpOpenId?: string;
-    pageSize?: string;
+    pageSize?: number;
     sortField?: string;
     sortOrder?: string;
     unionId?: string;
@@ -336,7 +381,7 @@ declare namespace API {
   };
 
   type UserUpdateRequest = {
-    id?: string;
+    id?: number;
     userAvatar?: string;
     userName?: string;
     userProfile?: string;
@@ -345,7 +390,7 @@ declare namespace API {
 
   type UserVO = {
     createTime?: string;
-    id?: string;
+    id?: number;
     userAvatar?: string;
     userName?: string;
     userProfile?: string;
