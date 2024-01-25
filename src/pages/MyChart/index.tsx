@@ -1,7 +1,6 @@
 import { listChartByPageUsingPOST } from '@/services/BI/chartController';
 
-import { PieChartOutlined } from '@ant-design/icons';
-import { Card, message, Result } from 'antd';
+import { Card, message, Result, Tag } from 'antd';
 import Search from 'antd/es/input/Search';
 import List from 'antd/lib/list';
 import ReactECharts from 'echarts-for-react';
@@ -83,16 +82,16 @@ const MyChart: React.FC = () => {
         dataSource={chartList}
         renderItem={(item) => (
           <List.Item key={item.id}>
-            <Card>
+            <Card title={item.name} style={{ height: 600 }}>
               {item.status === 'succeed' && (
                 <>
-                  <List.Item.Meta
-                    avatar={<PieChartOutlined style={{ fontSize: '25px' }} />}
-                    title={item.name}
-                    description={item.chartType ? '图表类型：' + item.chartType : undefined}
-                  />
-                  <div style={{ marginBottom: 16 }}></div>
-                  {'分析目标：' + item.goal}
+                  <Tag color="volcano">分析目标</Tag>
+                  {'' + item.goal}
+                  <div style={{ marginBottom: 12 }}></div>
+                  <Tag color="cyan">分析结论</Tag>
+                  {'' + item.genResult}
+                  <div style={{ marginBottom: 12 }}></div>
+                  <Tag color="magenta">{item.chartType ? item.chartType : undefined}</Tag>
                   <ReactECharts option={JSON.parse(item.genChart ?? '{}')} />
                 </>
               )}
@@ -131,4 +130,5 @@ const MyChart: React.FC = () => {
     </div>
   );
 };
+// @ts-ignore
 export default MyChart;
