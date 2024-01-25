@@ -1,6 +1,6 @@
-import { genChartByAiAsyncUsingPost } from '@/services/BI/chartController';
+import { genChartByAiAsyncMqUsingPOST } from '@/services/BI/chartController';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Card, Form, Input, message, Space, TreeSelect, Upload } from 'antd';
+import { Button, Card, Form, Input, Space, TreeSelect, Upload, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import TextArea from 'antd/es/input/TextArea';
 import React, { useState } from 'react';
@@ -21,7 +21,8 @@ const AddChartAsync: React.FC = () => {
     };
 
     try {
-      const res = await genChartByAiAsyncUsingPost(params, {}, values.file.file.originFileObj);
+      // const res = await genChartByAiAsyncUsingPost(params, {}, values.file.file.originFileObj);
+      const res = await genChartByAiAsyncMqUsingPOST(params, {}, values.file.file.originFileObj);
       if (!res?.data) {
         message.error('分析失败');
       } else {

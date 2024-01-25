@@ -1,4 +1,4 @@
-import { listchartByPageUsingPost } from '@/services/BI/chartController';
+import { listChartByPageUsingPOST } from '@/services/BI/chartController';
 
 import { PieChartOutlined } from '@ant-design/icons';
 import { Card, message, Result } from 'antd';
@@ -19,13 +19,13 @@ const MyChart: React.FC = () => {
   const loadData = async () => {
     setLoading(true);
     try {
-      const res = await listchartByPageUsingPost(searchParams);
+      const res = await listChartByPageUsingPOST(searchParams);
       if (res.data) {
         // 拿到分页的数据
         setChartList(res.data.records ?? []);
         setTotal(res.data.total ?? 0);
         if (res.data.records) {
-          res.data.records.forEach((data: { genChart: string }) => {
+          res.data.records.forEach((data) => {
             const chartOption = JSON.parse(data.genChart ?? '{}');
             if (chartOption.title) chartOption.title = undefined;
             data.genChart = JSON.stringify(chartOption);

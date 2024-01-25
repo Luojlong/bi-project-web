@@ -1,11 +1,12 @@
-import { genChartByAiUsingPost } from '@/services/BI/chartController';
+import { genChartByAiUsingPOST } from '@/services/BI/chartController';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Button,
   Card,
   Col,
   Divider,
-  Form, Input,
+  Form,
+  Input,
   message,
   Row,
   Space,
@@ -38,7 +39,7 @@ const AddChart: React.FC = () => {
     };
 
     try {
-      const res = await genChartByAiUsingPost(params, {}, values.file.file.originFileObj);
+      const res = await genChartByAiUsingPOST(params, {}, values.file.file.originFileObj);
       if (!res?.data) {
         message.error('分析失败');
       } else {

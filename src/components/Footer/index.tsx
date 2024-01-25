@@ -1,4 +1,4 @@
-import { GithubOutlined } from '@ant-design/icons';
+import { ApartmentOutlined, GithubOutlined } from '@ant-design/icons';
 import { DefaultFooter } from '@ant-design/pro-components';
 import '@umijs/max';
 import React from 'react';
@@ -19,15 +19,15 @@ const Footer: React.FC = () => {
           blankTarget: true,
         },
         {
-          key: 'gitee',
+          key: 'github',
           title: <GithubOutlined />,
-          href: 'https://gitee.com/jlongluo',
+          href: 'https://github.com/Luojlong',
           blankTarget: true,
         },
         {
-          key: 'BI 平台',
-          title: 'BI 平台',
-          href: 'https://ant.design',
+          key: 'gitee',
+          title: <ApartmentOutlined />,
+          href: 'https://gitee.com/jlongluo',
           blankTarget: true,
         },
       ]}
