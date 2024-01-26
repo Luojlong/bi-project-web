@@ -24,9 +24,9 @@ const AddChartAsync: React.FC = () => {
       // const res = await genChartByAiAsyncUsingPost(params, {}, values.file.file.originFileObj);
       const res = await genChartByAiAsyncMqUsingPOST(params, {}, values.file.file.originFileObj);
       if (!res?.data) {
-        message.error('分析失败');
+        message.error('分析失败', 2);
       } else {
-        message.success('分析任务提交成功，请稍后在我的图表中查看');
+        message.success('分析任务提交成功，请稍后在我的图表中查看', 2);
         form.resetFields();
       }
     } catch (e: any) {

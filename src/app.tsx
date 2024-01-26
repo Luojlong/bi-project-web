@@ -4,6 +4,8 @@ import { getLoginUserUsingGet } from '@/services/BI/userController';
 import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
+import { notification } from 'antd';
+import { useEffect } from 'react';
 import { AvatarDropdown, AvatarName } from './components/RightContent/AvatarDropdown';
 import { errorConfig } from './requestConfig';
 const loginPath = '/user/login';
@@ -36,6 +38,55 @@ export async function getInitialState(): Promise<{
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
+  // 初始化 WebSocket 连接
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    const clientId = Math.random().toString(36);
+    const newSocket = new WebSocket('ws://localhost:8101/api/ws/' + clientId);
+    newSocket.onopen = () => {
+      console.log('WebSocket已连接');
+    };
+    newSocket.onmessage = (event) => {
+      if (event.data === '图表生成好啦，快去看看吧！') {
+        notification.success({
+          message: event.data,
+          duration: 2,
+        });
+        // 获取当前路径
+        const currentPath = history.location.pathname;
+        if (currentPath === '/mychart') {
+          // 刷新当前路径
+          window.location.reload();
+        }
+      } else {
+        notification.error({
+          message: event.data, // 你可以根据实际情况设置错误消息
+          duration: 2,
+        });
+      }
+    };
+    newSocket.onclose = (event) => {
+      console.log('WebSocket已关闭：', event);
+      // 可以根据需要重新连接或处理关闭
+    };
+
+    // 将新的 socket 设置到 initialState 中
+    setInitialState((preInitialState) => ({
+      ...preInitialState,
+      socket: newSocket,
+    }));
+
+    // 当组件卸载时清理 WebSocket 连接
+    return () => {
+      if (
+        newSocket.readyState === WebSocket.OPEN ||
+        newSocket.readyState === WebSocket.CONNECTING
+      ) {
+        newSocket.close();
+      }
+    };
+  }, []);
+
   // @ts-ignore
   return {
     actionsRender: () => [<Question key="doc" />],

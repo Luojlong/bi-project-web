@@ -63,7 +63,7 @@ const AddChart: React.FC = () => {
     <div className={'chart'}>
       <Row gutter={24}>
         <Col span={12}>
-          <Card title={'分析设置'}>
+          <Card title={'分析设置'} style={{ height: 600 }}>
             <Form name="addChart" onFinish={onFinish} initialValues={{}} labelAlign={'left'}>
               <Form.Item
                 name="goal"
