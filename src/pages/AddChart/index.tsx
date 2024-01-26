@@ -40,10 +40,12 @@ const AddChart: React.FC = () => {
 
     try {
       const res = await genChartByAiUsingPOST(params, {}, values.file.file.originFileObj);
+
       if (!res?.data) {
-        message.error('分析失败');
+        message.error('分析失败，请重试');
+      } else if (res.data.genResult === 'large_size') {
+        message.error('数据文件过大，请在批量分析处进行处理');
       } else {
-        message.success('分析成功');
         const chartOption = JSON.parse(res.data.genChart ?? '');
         console.log(chartOption);
         if (!chartOption) {
@@ -52,6 +54,7 @@ const AddChart: React.FC = () => {
           setChart(res?.data);
           setOption(chartOption);
         }
+        message.success('分析成功');
       }
     } catch (e: any) {
       message.error('分析失败', e.message);
