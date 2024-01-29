@@ -10,7 +10,7 @@ import { Tabs, message } from 'antd';
 import React, { useState } from 'react';
 import Settings from '../../../../config/defaultSettings';
 const Register: React.FC = () => {
-  const [] = useState<API.LoginResult>({});
+  // const [] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const containerClassName = useEmotionCss(() => {
     return {

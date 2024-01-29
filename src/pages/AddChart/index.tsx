@@ -1,4 +1,5 @@
 import { genChartByAiUsingPOST } from '@/services/BI/chartController';
+import { getUserByIdUsingGet } from '@/services/BI/scoreController';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Button,
@@ -39,26 +40,33 @@ const AddChart: React.FC = () => {
     };
 
     try {
-      const res = await genChartByAiUsingPOST(params, {}, values.file.file.originFileObj);
-
-      if (!res?.data) {
-        message.error('分析失败，请重试');
-      } else if (res.data.genResult === 'large_size') {
-        message.error('数据文件过大，请在批量分析处进行处理');
+      const scoreRes = await getUserByIdUsingGet();
+      console.log('积分数：' + scoreRes.data);
+      // @ts-ignore
+      if (scoreRes.data < 1) {
+        message.error('积分不足，要坚持签到哦或者联系小罗同学');
       } else {
-        const chartOption = JSON.parse(res.data.genChart ?? '');
-        console.log(chartOption);
-        if (!chartOption) {
-          throw new Error('图表代码解析错误');
+        const res = await genChartByAiUsingPOST(params, {}, values.file.file.originFileObj);
+        if (!res?.data) {
+          message.error('分析失败，请重试');
+        } else if (res.data.genResult === 'large_size') {
+          message.error('数据文件过大，请在批量分析处进行处理');
         } else {
-          setChart(res?.data);
-          setOption(chartOption);
+          const chartOption = JSON.parse(res.data.genChart ?? '');
+          console.log(chartOption);
+          if (!chartOption) {
+            throw new Error('图表代码解析错误');
+          } else {
+            setChart(res?.data);
+            setOption(chartOption);
+          }
+          message.success('分析成功');
         }
-        message.success('分析成功');
       }
     } catch (e: any) {
       message.error('分析失败', e.message);
     }
+
     setSubmitting(false);
   };
 

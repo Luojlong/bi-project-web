@@ -8,7 +8,8 @@
   { path: '/', redirect: '/chart' },
   { path: '/chart', name: '数据分析', icon: 'DotChartOutlined', component: './AddChart' },
   { path: '/chartasync', name: '批量分析', icon: 'BoxPlotOutlined', component: './AddChartAsync' },
-  { path: '/mychart', name: '我的图表', icon: 'UnorderedListOutlined', component: './MyChart' },
+  { path: '/mychart', name: '我的图表', icon: 'PieChartOutlined', component: './MyChart' },
+  { path: '/myinfo', name: '我的信息', icon: 'UnorderedListOutlined', component: './User/Manage' },
   {
     path: '/admin',
     icon: 'crown',

@@ -1,4 +1,5 @@
 import { genChartByAiAsyncMqUsingPOST } from '@/services/BI/chartController';
+import { getUserByIdUsingGet } from '@/services/BI/scoreController';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, Space, TreeSelect, Upload, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
@@ -22,12 +23,19 @@ const AddChartAsync: React.FC = () => {
 
     try {
       // const res = await genChartByAiAsyncUsingPost(params, {}, values.file.file.originFileObj);
-      const res = await genChartByAiAsyncMqUsingPOST(params, {}, values.file.file.originFileObj);
-      if (!res?.data) {
-        message.error('分析失败', 2);
+      const scoreRes = await getUserByIdUsingGet();
+      console.log('积分数：' + scoreRes.data);
+      // @ts-ignore
+      if (scoreRes.data < 1) {
+        message.error('积分不足，要坚持签到哦或者联系小罗同学');
       } else {
-        message.success('分析任务提交成功，请稍后在我的图表中查看', 2);
-        form.resetFields();
+        const res = await genChartByAiAsyncMqUsingPOST(params, {}, values.file.file.originFileObj);
+        if (!res?.data) {
+          message.error('分析失败', 2);
+        } else {
+          message.success('分析任务提交成功，请稍后在我的图表中查看', 2);
+          form.resetFields();
+        }
       }
     } catch (e: any) {
       message.error('分析失败', e.message);
