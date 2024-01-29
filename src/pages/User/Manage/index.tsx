@@ -104,7 +104,7 @@ const UserProfile = () => {
         paddingTop: '20px',
       }}
     >
-      <Card style={{ width: 400, textAlign: 'center', padding: 20 }}>
+      <Card style={{ width: '100%', textAlign: 'center', padding: 20 }}>
         <Avatar size={80} src={userData?.data?.userAvatar} />
         <h2 style={{ fontSize: 24 }}>{userData?.data?.userName}</h2>
         <p style={{ fontSize: 18 }}>积分：{score?.data}</p>
@@ -113,7 +113,7 @@ const UserProfile = () => {
           size="large"
           onClick={handleSignIn}
           disabled={signStatus?.data !== 0 || isSignedIn}
-          style={{ fontSize: 18, width: 80 }}
+          style={{ fontSize: 18, width: 90, marginRight: 10 }}
         >
           <>
             {signStatus?.data !== 0 || isSignedIn ? (
@@ -126,9 +126,11 @@ const UserProfile = () => {
         <Button style={{ marginTop: 10, fontSize: 18 }} size="large" onClick={handleRecharge}>
           充值积分
         </Button>
-        <Button style={{ marginTop: 10, fontSize: 18 }} size="large" onClick={handleEditProfile}>
-          编辑个人信息
-        </Button>
+        <div style={{ display: 'block' }}>
+          <Button style={{ marginTop: 10, fontSize: 18 }} size="large" onClick={handleEditProfile}>
+            编辑个人信息
+          </Button>
+        </div>
       </Card>
 
       <Modal
