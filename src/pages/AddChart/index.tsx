@@ -79,9 +79,9 @@ const AddChart: React.FC = () => {
               <Form.Item
                 name="goal"
                 label="分析目标"
-                rules={[{ required: true, message: '请输入分析目标' }]}
+                rules={[{ required: false, message: '请输入分析目标' }]}
               >
-                <TextArea placeholder="请输入你的分析需求。若图表类型不存在你想要的分析类型，可在此处添加" />
+                <TextArea placeholder="请输入你的分析需求。若图表类型不存在你想要的分析类型，可在此处添加。若还不清楚分析需求均可不填。" />
               </Form.Item>
               <Form.Item name="name" label="图表名称">
                 <Input placeholder="请输入图表名称" />

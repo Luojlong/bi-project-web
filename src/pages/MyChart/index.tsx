@@ -1,6 +1,5 @@
-import { listChartByPageUsingPOST } from '@/services/BI/chartController';
-
-import { Card, message, Result, Tag } from 'antd';
+import { listMyChartByPageUsingPOST } from '@/services/BI/chartController';
+import { Card, Result, Tag, message } from 'antd';
 import Search from 'antd/es/input/Search';
 import List from 'antd/lib/list';
 import ReactECharts from 'echarts-for-react';
@@ -18,7 +17,7 @@ const MyChart: React.FC = () => {
   const loadData = async () => {
     setLoading(true);
     try {
-      const res = await listChartByPageUsingPOST(searchParams);
+      const res = await listMyChartByPageUsingPOST(searchParams);
       if (res.data) {
         // 拿到分页的数据
         setChartList(res.data.records ?? []);
