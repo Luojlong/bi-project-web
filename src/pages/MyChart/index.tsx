@@ -100,10 +100,7 @@ const MyChart: React.FC = () => {
                     status="error"
                     title="图表生成失败"
                     subTitle={item.execMessage}
-                    // TODO:添加重试按钮重定位到分析界面
-                    // extra={[
-                    //   <Button key="buy">Buy Again</Button>,
-                    // ]}
+                    // extra={[<Button key="retry" type="primary" onClick={onFinish}>Buy Again</Button>]}
                   />
                 </>
               )}

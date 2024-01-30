@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 const AddChartAsync: React.FC = () => {
   const [form] = useForm();
   const [submitting, setSubmitting] = useState<boolean>(false);
-  // json解析状态，是否解析成功
+
 
   const onFinish = async (values: any) => {
     console.log('onFinish called');

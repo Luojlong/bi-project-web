@@ -1,12 +1,12 @@
 import Footer from '@/components/Footer';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LeftCircleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 
 import { userRegisterUsingPost } from '@/services/BI/userController';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { Helmet, history } from '@umijs/max';
-import { Tabs, message } from 'antd';
+import { Button, Tabs, message } from 'antd';
 import React, { useState } from 'react';
 import Settings from '../../../../config/defaultSettings';
 const Register: React.FC = () => {
@@ -147,7 +147,20 @@ const Register: React.FC = () => {
             style={{
               marginBottom: 24,
             }}
-          ></div>
+          >
+            <Button
+              type="dashed"
+              danger
+              icon={<LeftCircleOutlined />}
+              href={'/user/login'}
+              style={{ marginRight: '10px' }}
+            >
+              退出
+            </Button>
+            <span style={{ fontSize: '16px', fontFamily: 'Arial, sans-serif' }}>
+              点击离开注册界面
+            </span>
+          </div>
         </LoginForm>
       </div>
       <Footer />
