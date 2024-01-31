@@ -1,5 +1,6 @@
 import { listMyChartByPageUsingPOST } from '@/services/BI/chartController';
-import { Card, Result, Tag, message } from 'antd';
+import { ReloadOutlined } from '@ant-design/icons';
+import { Button, Card, Result, Space, Tag, message } from 'antd';
 import Search from 'antd/es/input/Search';
 import List from 'antd/lib/list';
 import ReactECharts from 'echarts-for-react';
@@ -35,7 +36,9 @@ const MyChart: React.FC = () => {
     }
     setLoading(false);
   };
-
+  const refresh = () => {
+    loadData();
+  };
   // react的钩子函数，页面首次渲染或该数组变动执行该代码
   useEffect(() => {
     loadData();
@@ -43,17 +46,23 @@ const MyChart: React.FC = () => {
 
   return (
     <div className={'my-chart'}>
-      <Search
-        placeholder={'请输入图表名称'}
-        loading={loading}
-        enterButton
-        onSearch={(value) => {
-          setSearchParams({
-            ...initSearchParams,
-            name: value,
-          });
-        }}
-      ></Search>
+      <Space>
+        <Button type="primary" icon={<ReloadOutlined />} onClick={() => refresh()}></Button>
+        <Search
+          placeholder={'支持查询：图表名称、图表类型、分析目标'}
+          loading={loading}
+          enterButton
+          onSearch={(value) => {
+            setSearchParams({
+              ...initSearchParams,
+              name: value,
+              chartType: value,
+              goal: value,
+            });
+          }}
+          style={{ width: 600 }}
+        ></Search>
+      </Space>
       <div style={{ marginBottom: 16 }} />
       <List
         grid={{
@@ -81,7 +90,7 @@ const MyChart: React.FC = () => {
         dataSource={chartList}
         renderItem={(item) => (
           <List.Item key={item.id}>
-            <Card title={item.name} style={{ height: 600 }}>
+            <Card title={item.name}>
               {item.status === 'succeed' && (
                 <>
                   <Tag color="volcano">分析目标</Tag>
@@ -100,7 +109,11 @@ const MyChart: React.FC = () => {
                     status="error"
                     title="图表生成失败"
                     subTitle={item.execMessage}
-                    // extra={[<Button key="retry" type="primary" onClick={onFinish}>Buy Again</Button>]}
+                    // extra={[
+                    //   <Button key="retry" type="primary">
+                    //     重试
+                    //   </Button>,
+                    // ]}
                   />
                 </>
               )}

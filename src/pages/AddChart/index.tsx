@@ -28,7 +28,6 @@ const AddChart: React.FC = () => {
   const [option, setOption] = useState<any>();
 
   const onFinish = async (values: any) => {
-    console.log('onFinish called');
     // 避免重复提交
     if (submitting) return;
     setSubmitting(true);
