@@ -1,13 +1,17 @@
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import '@umijs/max';
-export type SiderTheme = 'light' | 'dark';
-export const SelectLang = () => {
+export const Question = () => {
   return (
-    // eslint-disable-next-line react/jsx-no-undef
-    <UmiSelectLang
+    <div
       style={{
-        padding: 4,
+        display: 'flex',
+        height: 26,
       }}
-    />
+      onClick={() => {
+        window.open('https://gitee.com/jlongluo/');
+      }}
+    >
+      <QuestionCircleOutlined />
+    </div>
   );
 };
-export const Question = () => {};

@@ -10,11 +10,12 @@ const Settings: ProLayoutProps & {
   navTheme: 'light',
   // 拂晓蓝
   colorPrimary: '#1890ff',
-  layout: 'mix',
+  layout: 'side',
   contentWidth: 'Fluid',
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
+  splitMenus: false,
   title: 'BI 平台',
   pwa: true,
   logo: '/logo.svg',
@@ -24,5 +25,4 @@ const Settings: ProLayoutProps & {
     //https://procomponents.ant.design/components/layout#%E9%80%9A%E8%BF%87-token-%E4%BF%AE%E6%94%B9%E6%A0%B7%E5%BC%8F
   },
 };
-
 export default Settings;
