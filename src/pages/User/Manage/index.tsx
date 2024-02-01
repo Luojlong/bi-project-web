@@ -135,7 +135,7 @@ const UserProfile = () => {
 
       <Modal
         title="编辑个人信息"
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleSaveProfile}
         onCancel={() => setModalVisible(false)}
       >

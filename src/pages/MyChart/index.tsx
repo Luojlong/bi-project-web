@@ -3,8 +3,8 @@ import {
   retryGenChartByAiAsyncMqUsingGet,
 } from '@/services/BI/chartController';
 import { getUserByIdUsingGet } from '@/services/BI/scoreController';
-import { ReloadOutlined } from '@ant-design/icons';
-import { Button, Card, Result, Space, Tag, message } from 'antd';
+import { AlignRightOutlined, ReloadOutlined } from '@ant-design/icons';
+import { Button, Card, Modal, Result, Space, Tag, message } from 'antd';
 import Search from 'antd/es/input/Search';
 import List from 'antd/lib/list';
 import ReactECharts from 'echarts-for-react';
@@ -19,7 +19,11 @@ const MyChart: React.FC = () => {
   // 总的数据数
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  // 是否重试
   const [retrying, setRetrying] = useState(false);
+  // 数据图标
+  const [modalStatus, setModalStatus] = useState<{ [key: number]: boolean }>({});
+
   const loadData = async () => {
     setLoading(true);
     try {
@@ -48,6 +52,21 @@ const MyChart: React.FC = () => {
   useEffect(() => {
     loadData();
   }, [searchParams]);
+  const showModal = (itemId: number) => {
+    setModalStatus({ ...modalStatus, [itemId]: true });
+  };
+
+  const hideModal = (itemId: number) => {
+    setModalStatus({ ...modalStatus, [itemId]: false });
+  };
+  // const showModal = () => {
+  //   setOpen(true);
+  // };
+  //
+  // const hideModal = () => {
+  //   setOpen(false);
+  // };
+
   const retry = async (id: number) => {
     if (retrying) {
       return; // 如果正在重试中，直接返回，不执行后续操作
@@ -67,7 +86,6 @@ const MyChart: React.FC = () => {
       }
     }
   };
-  // @ts-ignore
   return (
     <div className={'my-chart'}>
       <Space>
@@ -114,7 +132,36 @@ const MyChart: React.FC = () => {
         dataSource={chartList}
         renderItem={(item) => (
           <List.Item key={item.id}>
-            <Card title={item.name}>
+            <Card
+              title={
+                <span
+                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                >
+                  <span>{item.name}</span>
+                  <span>
+                    <Button
+                      icon={<AlignRightOutlined />}
+                      onClick={() => showModal(item.id)}
+                      style={{ boxShadow: 'none', border: 'none' }}
+                    ></Button>
+                    <Modal
+                      title="原始数据"
+                      open={modalStatus[item.id]}
+                      onOk={() => hideModal(item.id)}
+                      onCancel={() => hideModal(item.id)}
+                      okText="确认"
+                      cancelText="取消"
+                    >
+                      {item.chartData.split('\n').map((dataSegment, index) => (
+                        <div key={index} style={{ marginBottom: 8 }}>
+                          {dataSegment}
+                        </div>
+                      ))}
+                    </Modal>
+                  </span>
+                </span>
+              }
+            >
               {item.status === 'succeed' && (
                 <>
                   <Tag color="volcano">分析目标</Tag>
