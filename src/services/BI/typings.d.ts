@@ -160,6 +160,11 @@ declare namespace API {
     name?: string;
   };
 
+  type retryGenChartByAiAsyncMqUsingGETParams = {
+    /** id */
+    id?: number;
+  };
+
   type genChartByAiAsyncUsingPOSTParams = {
     chartType?: string;
     goal?: string;

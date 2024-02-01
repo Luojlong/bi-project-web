@@ -1,3 +1,4 @@
+// @ts-ignore
 /* eslint-disable */
 import { request } from '@umijs/max';
 
@@ -17,7 +18,7 @@ export async function getUserByIdUsingGet(options?: { [key: string]: any }) {
   });
 }
 
-/** getUserById GET /api/score/getSign */
+/** getSignById GET /api/score/getSign */
 export async function getSignByIdUsingGet(options?: { [key: string]: any }) {
   return request<API.BaseResponseInt_>('/api/score/getSign', {
     method: 'GET',

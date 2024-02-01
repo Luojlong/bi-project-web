@@ -1,4 +1,8 @@
-import { listMyChartByPageUsingPOST } from '@/services/BI/chartController';
+import {
+  listMyChartByPageUsingPOST,
+  retryGenChartByAiAsyncMqUsingGet,
+} from '@/services/BI/chartController';
+import { getUserByIdUsingGet } from '@/services/BI/scoreController';
 import { ReloadOutlined } from '@ant-design/icons';
 import { Button, Card, Result, Space, Tag, message } from 'antd';
 import Search from 'antd/es/input/Search';
@@ -15,6 +19,7 @@ const MyChart: React.FC = () => {
   // 总的数据数
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  const [retrying, setRetrying] = useState(false);
   const loadData = async () => {
     setLoading(true);
     try {
@@ -25,7 +30,7 @@ const MyChart: React.FC = () => {
         setTotal(res.data.total ?? 0);
         if (res.data.records) {
           res.data.records.forEach((data) => {
-            const chartOption = JSON.parse(data.genChart ?? '{}');
+            const chartOption = JSON.parse(data.genChart || '{}');
             if (chartOption.title) chartOption.title = undefined;
             data.genChart = JSON.stringify(chartOption);
           });
@@ -43,7 +48,26 @@ const MyChart: React.FC = () => {
   useEffect(() => {
     loadData();
   }, [searchParams]);
-
+  const retry = async (id: number) => {
+    if (retrying) {
+      return; // 如果正在重试中，直接返回，不执行后续操作
+    }
+    setRetrying(true);
+    const scoreRes = await getUserByIdUsingGet();
+    console.log('积分数：' + scoreRes.data);
+    // @ts-ignore
+    if (scoreRes.data < 1) {
+      message.error('积分不足，要坚持签到哦或者联系小罗同学');
+    } else {
+      const res = await retryGenChartByAiAsyncMqUsingGet({ id });
+      if (!res?.data) {
+        message.error('分析失败', 2);
+      } else {
+        message.success('重试分析任务提交成功，请稍后查看，可刷新查看状态', 2);
+      }
+    }
+  };
+  // @ts-ignore
   return (
     <div className={'my-chart'}>
       <Space>
@@ -100,7 +124,7 @@ const MyChart: React.FC = () => {
                   {'' + item.genResult}
                   <div style={{ marginBottom: 12 }}></div>
                   <Tag color="magenta">{item.chartType ? item.chartType : undefined}</Tag>
-                  <ReactECharts option={JSON.parse(item.genChart ?? '{}')} />
+                  <ReactECharts option={JSON.parse(item.genChart || '{}')} />
                 </>
               )}
               {item.status === 'failed' && (
@@ -109,11 +133,18 @@ const MyChart: React.FC = () => {
                     status="error"
                     title="图表生成失败"
                     subTitle={item.execMessage}
-                    // extra={[
-                    //   <Button key="retry" type="primary">
-                    //     重试
-                    //   </Button>,
-                    // ]}
+                    extra={[
+                      <Button
+                        key="retry"
+                        type="primary"
+                        onClick={() => item.id && retry(item.id)}
+                        size={'large'}
+                        disabled={retrying}
+                        style={{ fontFamily: 'Noto Color Emoji', fontSize: 18 }}
+                      >
+                        {retrying ? '重试中...' : '重试'}
+                      </Button>,
+                    ]}
                   />
                 </>
               )}

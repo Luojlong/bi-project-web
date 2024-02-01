@@ -6,11 +6,13 @@ import * as chartController from './chartController';
 import * as fileController from './fileController';
 import * as postFavourController from './postFavourController';
 import * as postThumbController from './postThumbController';
+import * as scoreController from './scoreController';
 import * as userController from './userController';
 export default {
   chartController,
   fileController,
   postFavourController,
   postThumbController,
+  scoreController,
   userController,
 };
