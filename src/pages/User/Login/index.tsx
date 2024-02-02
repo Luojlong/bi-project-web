@@ -47,6 +47,8 @@ const Login: React.FC = () => {
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
         history.push(urlParams.get('redirect') || '/');
+        // 强制刷新让用户信息初始化出来
+        window.location.reload();
         return;
       } else {
         message.error(res.message);
