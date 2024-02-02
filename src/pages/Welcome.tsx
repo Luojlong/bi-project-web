@@ -1,7 +1,7 @@
 import { PageContainer } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
 import { Card, theme } from 'antd';
 import React from 'react';
+import defaultSettings from '../../config/defaultSettings';
 
 /**
  * 每个单独的卡片，为了复用样式抽成了组件
@@ -10,7 +10,7 @@ import React from 'react';
  */
 const InfoCard: React.FC<{
   title: string;
-  index: number;
+  index: string;
   desc: string;
   href: string;
 }> = ({ title, href, index, desc }) => {
@@ -85,7 +85,6 @@ const InfoCard: React.FC<{
 
 const Welcome: React.FC = () => {
   const { token } = theme.useToken();
-  const { initialState } = useModel('@@initialState');
   return (
     <PageContainer>
       <Card
@@ -94,7 +93,7 @@ const Welcome: React.FC = () => {
         }}
         bodyStyle={{
           backgroundImage:
-            initialState?.settings?.navTheme === 'realDark'
+            defaultSettings?.navTheme === 'realDark'
               ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
               : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
         }}
@@ -126,8 +125,12 @@ const Welcome: React.FC = () => {
               width: '65%',
             }}
           >
-            BI 平台 是一个整合了 umi，BI 平台 和 ProComponents
-            的脚手架方案。致力于在设计规范和基础组件的基础上，继续向上构建，提炼出典型模板/业务组件/配套设计资源，进一步提升企业级中后台产品设计研发过程中的『用户』和『设计者』的体验。
+            该 BI 平台是一个基于 Openai 的智能分析平台。
+            您只需导入原始数据，并输入分析需求即可自动生成可视化的图表分析及其结论。
+            您还可以查看分析的原始数据，当分析失败时可在我的图表手动重试。
+            文件数据较大请使用批量分析以免等待时间过程影响您的体验。
+            目前新注册用户可以免费调用10次（10积分，每次调用扣除1积分），当然您也可以通过签到获取更多积分。
+            如需更多使用次数，请联系管理员：JL18467
           </p>
           <div
             style={{
@@ -137,22 +140,12 @@ const Welcome: React.FC = () => {
             }}
           >
             <InfoCard
-              index={1}
-              href="https://umijs.org/docs/introduce/introduce"
-              title="了解 umi"
-              desc="umi 是一个可扩展的企业级前端应用框架,umi 以路由为基础的，同时支持配置式路由和约定式路由，保证路由的功能完备，并以此进行功能扩展。"
-            />
-            <InfoCard
-              index={2}
-              title="了解 BI 平台"
-              href="https://ant.design"
-              desc="antd 是基于 BI 平台 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。"
-            />
-            <InfoCard
-              index={3}
-              title="了解 Pro Components"
-              href="https://procomponents.ant.design"
-              desc="ProComponents 是一个基于 BI 平台 做了更高抽象的模板组件，以 一个组件就是一个页面为开发理念，为中后台开发带来更好的体验。"
+              href="https://gitee.com/jlongluo"
+              title="相关技术"
+              desc={
+                '1、基于Spring Boot + AIGC + React的分析平台。 2、基于RabbitMQ的消息队列实现Ai分析的并发执行、异步化与持久化。 3、基于Guava的任务重试机制对分析过程失败的任务进行自动重试。 4、利用Redis进行图表数据的分布式缓存提高图表数据的查询速度。 5、基于Redission进行分布式限流预防恶意分析请求。'
+              }
+              index={'*'}
             />
           </div>
         </div>
