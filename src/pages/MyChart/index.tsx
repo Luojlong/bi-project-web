@@ -23,7 +23,8 @@ const MyChart: React.FC = () => {
   const [retrying, setRetrying] = useState(false);
   // 数据图标
   const [modalStatus, setModalStatus] = useState<{ [key: number]: boolean }>({});
-
+  // 输入框状态
+  const [searchValue, setSearchValue] = useState('');
   const loadData = async () => {
     setLoading(true);
     try {
@@ -59,13 +60,6 @@ const MyChart: React.FC = () => {
   const hideModal = (itemId: number) => {
     setModalStatus({ ...modalStatus, [itemId]: false });
   };
-  // const showModal = () => {
-  //   setOpen(true);
-  // };
-  //
-  // const hideModal = () => {
-  //   setOpen(false);
-  // };
 
   const retry = async (id: number) => {
     if (retrying) {
@@ -94,6 +88,22 @@ const MyChart: React.FC = () => {
           placeholder={'支持查询：图表名称、图表类型、分析目标'}
           loading={loading}
           enterButton
+          value={searchValue}
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+            if (!e.target.value) {
+              refresh();
+            }
+          }}
+          onPressEnter={(e) => {
+            setSearchParams({
+              ...initSearchParams,
+              name: e.target.value,
+              chartType: e.target.value,
+              goal: e.target.value,
+            });
+            loadData();
+          }}
           onSearch={(value) => {
             setSearchParams({
               ...initSearchParams,
@@ -101,6 +111,7 @@ const MyChart: React.FC = () => {
               chartType: value,
               goal: value,
             });
+            loadData();
           }}
           style={{ width: 600 }}
         ></Search>
