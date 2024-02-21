@@ -67,7 +67,6 @@ const MyChart: React.FC = () => {
     }
     setRetrying(true);
     const scoreRes = await getUserByIdUsingGet();
-    console.log('积分数：' + scoreRes.data);
     // @ts-ignore
     if (scoreRes.data < 1) {
       message.error('积分不足，要坚持签到哦或者联系小罗同学');

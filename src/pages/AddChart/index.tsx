@@ -40,7 +40,6 @@ const AddChart: React.FC = () => {
 
     try {
       const scoreRes = await getUserByIdUsingGet();
-      console.log('积分数：' + scoreRes.data);
       // @ts-ignore
       if (scoreRes.data < 1) {
         message.error('积分不足，要坚持签到哦或者联系小罗同学');
@@ -52,7 +51,6 @@ const AddChart: React.FC = () => {
           message.error('数据文件过大，请在批量分析处进行处理');
         } else {
           const chartOption = JSON.parse(res.data.genChart ?? '');
-          console.log(chartOption);
           if (!chartOption) {
             throw new Error('图表代码解析错误');
           } else {

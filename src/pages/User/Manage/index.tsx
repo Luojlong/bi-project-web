@@ -31,7 +31,6 @@ const UserProfile = () => {
 
       if (signRes.hasOwnProperty('data')) {
         setSignStatus(signRes);
-        console.log(signRes);
       } else {
         message.error(signRes.message);
       }
@@ -42,7 +41,6 @@ const UserProfile = () => {
         message.error(scoreRes.message);
       }
     } catch (e) {
-      console.log(e);
       message.error('获取信息失败');
     }
   };
@@ -88,7 +86,6 @@ const UserProfile = () => {
         message.error(updateUserInfo.message);
       }
     } catch (e) {
-      console.log(e);
       message.error('信息保存失败');
     }
   };

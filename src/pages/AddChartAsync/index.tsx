@@ -10,9 +10,7 @@ const AddChartAsync: React.FC = () => {
   const [form] = useForm();
   const [submitting, setSubmitting] = useState<boolean>(false);
 
-
   const onFinish = async (values: any) => {
-    console.log('onFinish called');
     // 避免重复提交
     if (submitting) return;
     setSubmitting(true);
@@ -24,7 +22,6 @@ const AddChartAsync: React.FC = () => {
     try {
       // const res = await genChartByAiAsyncUsingPost(params, {}, values.file.file.originFileObj);
       const scoreRes = await getUserByIdUsingGet();
-      console.log('积分数：' + scoreRes.data);
       // @ts-ignore
       if (scoreRes.data < 1) {
         message.error('积分不足，要坚持签到哦或者联系小罗同学');
