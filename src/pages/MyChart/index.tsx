@@ -20,7 +20,7 @@ const MyChart: React.FC = () => {
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   // 是否重试
-  const [retrying, setRetrying] = useState(false);
+  const [retryingMap, setRetryingMap] = useState({});
   // 数据图标
   const [modalStatus, setModalStatus] = useState<{ [key: number]: boolean }>({});
   // 输入框状态
@@ -62,10 +62,14 @@ const MyChart: React.FC = () => {
   };
 
   const retry = async (id: number) => {
-    if (retrying) {
+    if (retryingMap[id]) {
       return; // 如果正在重试中，直接返回，不执行后续操作
     }
-    setRetrying(true);
+    // 使用浅拷贝来更新重试状态对象，确保不修改原始状态
+    const newRetryingMap = { ...retryingMap };
+    newRetryingMap[id] = true; // 设置当前项目的重试状态为true
+    setRetryingMap(newRetryingMap); // 更新状态，触发重新渲染
+
     const scoreRes = await getUserByIdUsingGet();
     // @ts-ignore
     if (scoreRes.data < 1) {
@@ -196,10 +200,10 @@ const MyChart: React.FC = () => {
                         type="primary"
                         onClick={() => item.id && retry(item.id)}
                         size={'large'}
-                        disabled={retrying}
+                        disabled={retryingMap[item.id]} // 根据项目ID获取重试状态
                         style={{ fontFamily: 'Noto Color Emoji', fontSize: 18 }}
                       >
-                        {retrying ? '重试中...' : '重试'}
+                        {retryingMap[item.id] ? '重试中...' : '重试'} {/* 根据项目ID获取重试状态 */}
                       </Button>,
                     ]}
                   />
